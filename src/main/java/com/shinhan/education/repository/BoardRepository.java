@@ -2,7 +2,8 @@ package com.shinhan.education.repository;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -35,5 +36,11 @@ public interface BoardRepository extends CrudRepository<BoardVO, Long>{
  
 	public List<BoardVO> findByContentIgnoreCase(String content);	//where upper(Content) = upper(?)
  
+	//where Title like ? order by Title desc
+	public List<BoardVO> findByTitleContainingOrderByTitleDesc(String title);
 	
+	//title로 조회, sort desc, paging => page, size
+ 	public List<BoardVO> findByTitleContainingOrderByTitleDesc(String title, Pageable paging);
+	public List<BoardVO> findByTitleContaining(String title, Pageable paging);
+	public Page<BoardVO> findByBnoGreaterThan(Long bno, Pageable paging);
 }

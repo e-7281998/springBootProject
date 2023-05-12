@@ -8,20 +8,83 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.shinhan.education.VO.BoardVO;
 import com.shinhan.education.VO.CarVO;
 import com.shinhan.education.repository.BoardRepository;
 
+import lombok.extern.java.Log;
+
 //JUNIT으로 단위 test하기 
 @SpringBootTest
-class SpringBootProjectApplicationTests {
+@Log
+class BoardTest {
 
-	Logger logger = LoggerFactory.getLogger(SpringBootProjectApplicationTests.class);
+	Logger logger = LoggerFactory.getLogger(BoardTest.class);
 	
 	@Autowired
 	BoardRepository brepo; 
+	
+	@Test
+	void sample5() {	//잘 안됨
+		Sort sort = Sort.by(Sort.Direction.DESC, new String[] {"writer", "bno"});
+		Pageable paging = PageRequest.of(0, 5, sort);	//(몇 페이지인지, 한페이지의 사이즈)
+ 		
+		Page<BoardVO> result = brepo.findByBnoGreaterThan(50L, paging);
+		log.info("페이지당 건수 : " + result.getSize());
+		log.info("페이지당 총수 : " + result.getTotalPages());
+		log.info("전체 건수 : " + result.getTotalElements() );
+		log.info("다음 페이지 정보 : " + result.nextPageable() );
+		List<BoardVO> blist = result.getContent();
+		blist.forEach(board -> {
+			log.info(board.toString());
+		}); 
+	}
+	
+	//@Test
+	void sample4() {	//??잘 안됨
+		//Sort sort = Sort.by("bno").descending();
+		
+		//order by writer desc, bno desc
+		Sort sort = Sort.by(Sort.Direction.DESC, new String[] {"writer", "bno"});
+		Pageable paging = PageRequest.of(0, 5, sort);	//(몇 페이지인지, 한페이지의 사이즈)
+ 		
+		List<BoardVO> blist = brepo.findByTitleContaining("제목", paging);
+		blist.forEach(board -> {
+			log.info(board.toString());
+		}); 
+	}
+	
+	//@Test
+	void sample3() {	//??잘 안됨
+		Pageable paging = PageRequest.of(2, 5);	//(몇 페이지인지, 한페이지의 사이즈)
+ 		List<BoardVO> blist = brepo.findByTitleContainingOrderByTitleDesc("제목", paging);
+		blist.forEach(board -> {
+			log.info(board.toString());
+		}); 
+	}
+	
+	//@Test
+	void sample2() {
+		
+		List<BoardVO> blist = brepo.findByTitleContainingOrderByTitleDesc("제목");
+		blist.forEach(board -> {
+			log.info(board.toString());
+		}); 
+	}
+	
+	//@Test
+	void sample1() {
+		long rowCount = brepo.count();
+		log.info(rowCount + "건");
+		
+		boolean result = brepo.existsById(10L);
+		log.info(result ? "존재한다" : "존재하지않는다");
+	}
 	
 	//@Test
 	public void retrieve13() {	//content가 null인것 중에 짝수는 ABC, 홀수는 abc
@@ -207,7 +270,7 @@ class SpringBootProjectApplicationTests {
 		logger.info(car1.equals(car2)+"");
  	}
 	
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
