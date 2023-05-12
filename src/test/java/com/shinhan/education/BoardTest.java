@@ -1,5 +1,6 @@
 package com.shinhan.education;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -29,8 +30,41 @@ class BoardTest {
 	@Autowired
 	BoardRepository brepo; 
 	
+	
 	@Test
-	void sample5() {	//잘 안됨
+	void sample9NativeQueryTest() { 
+		 List<BoardVO> blist = brepo.findByTitle6("9", "내용");
+		 blist.forEach(board -> {
+				log.info(board.toString());
+			}); 
+	}
+	
+	//@Test
+	void sample8() { 
+		 List<Object[]> blist = brepo.findByTitle5("9", "내용");
+		 blist.forEach(arr -> {
+				log.info(Arrays.toString(arr));
+			}); 
+	}
+	
+	//@Test
+	void sample7() { 
+		 List<BoardVO> blist = brepo.findByTitle4("9", "내용");
+		 blist.forEach(board -> {
+				log.info(board.toString());
+			}); 
+	}
+	
+	//@Test
+	void sample6() { 
+		 List<BoardVO> blist = brepo.findByTitle3("9", "내용");
+		 blist.forEach(board -> {
+				log.info(board.toString());
+			}); 
+	}
+	
+	//@Test
+	void sample5() { 
 		Sort sort = Sort.by(Sort.Direction.DESC, new String[] {"writer", "bno"});
 		Pageable paging = PageRequest.of(0, 5, sort);	//(몇 페이지인지, 한페이지의 사이즈)
  		
