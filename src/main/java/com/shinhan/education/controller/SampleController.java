@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.querydsl.core.BooleanBuilder;
+import com.shinhan.education.VO.BoardVO;
 import com.shinhan.education.VO.CarVO;
+import com.shinhan.education.VO.QBoardVO;
 import com.shinhan.education.repository.BoardRepository;
 
 import lombok.extern.java.Log;
@@ -22,6 +25,31 @@ public class SampleController {
 	
 	@Autowired
 	BoardRepository brepo; 
+	
+	//동적 SQL 만들기
+	@GetMapping("/sunday")
+	public List<BoardVO> dynamicSQLTest() {
+		String title2 = "제목";	//and title like '%제목9%'
+		Long bno = 15L;	//and bno > 15
+		
+		BooleanBuilder builder = new BooleanBuilder();
+		QBoardVO board = QBoardVO.boardVO;
+		
+		//원래 있던 sql에 다음을 추가 
+		builder.and(board.title.like("%"+title2+"%"));
+		builder.and(board.bno.gt(bno));
+		builder.and(board.writer.eq("작성자1"));
+		System.out.println(board);	//boardVO
+		System.out.println(builder);	//boardVO.title like %제목% && boardVO.bno > 15 && boardVO.writer = 작성자1
+		//findAll() => CrudRepository 에서 제공
+		//findAll(predicate) => QuerydslPredicateExecutor 에서 제공
+		List<BoardVO> blist =(List<BoardVO> ) brepo.findAll(builder);
+		 blist.forEach(b -> {
+				log.info(b.toString());
+		});
+		 
+		 return blist;
+	}
 	
 	@GetMapping("/friday")
 	public Map<String, Object> sample1() {

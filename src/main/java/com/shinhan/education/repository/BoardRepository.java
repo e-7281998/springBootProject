@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,10 @@ import com.shinhan.education.VO.BoardVO;
 //2. 규칙에 맞는 메서드 추가 : findByXXXX
 //3. JQPL 사용 : @Query
 //4. JQPL 사용 : @Query, nativeQuery = true 를 사용하면 직접 SQL 작성이 가능하다.
+//5. 동적 sql 사용시 내가 직접 변수로 입력할 수 있다.
 @Repository
-public interface BoardRepository extends CrudRepository<BoardVO, Long>{
+public interface BoardRepository extends CrudRepository<BoardVO, Long>,
+								QuerydslPredicateExecutor<BoardVO>{
 	//조건조회를 추가하기.. 다음을 참고
 	//https://docs.spring.io/spring-data/jpa/docs/2.5.1/reference/html/#jpa.query-methods
 	public List<BoardVO> findByTitle(String title);
