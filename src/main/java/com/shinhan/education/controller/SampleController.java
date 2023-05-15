@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import org.hibernate.annotations.SQLUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +17,7 @@ import com.shinhan.education.VO.BoardVO;
 import com.shinhan.education.VO.CarVO;
 import com.shinhan.education.VO.QBoardVO;
 import com.shinhan.education.repository.BoardRepository;
+import com.shinhan.education.repository.PDSBoardRepository;
 
 import lombok.extern.java.Log;
 
@@ -25,6 +28,15 @@ public class SampleController {
 	
 	@Autowired
 	BoardRepository brepo; 
+	
+	@Autowired
+	PDSBoardRepository pdsBoardRepo;
+	
+	@GetMapping("/monday") 
+	String fileUpdate() {
+		int result = pdsBoardRepo.updateFile(5L, "풍경사진?");
+		return "OK " + result;
+	}
 	
 	//동적 SQL 만들기
 	@GetMapping("/sunday")
