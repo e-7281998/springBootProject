@@ -40,7 +40,7 @@ public class EmpVO {
 	 private Integer manager_id;
 	 
 	 //1번
-	 @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	 @ManyToOne
 	 private DeptVO dept;
 	 //칼럼이름은 dept_department_id로 생성됨
 }
