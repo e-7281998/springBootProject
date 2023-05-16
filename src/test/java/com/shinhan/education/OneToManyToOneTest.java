@@ -1,5 +1,6 @@
 package com.shinhan.education;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -30,7 +31,7 @@ public class OneToManyToOneTest {
 	}
 	
 	//board번호가 100이상인 board 조회... paging 추가
-	@Test
+	//@Test
 	void test6() {
 		//0번째 페이지에서, 페이지당 3건만 출력, 정렬은 desc로 하고, 정렬 기준은 bno
 		//Pageable paging = PageRequest.of(0, 3, Sort.Direction.DESC, "bno");
@@ -72,16 +73,20 @@ public class OneToManyToOneTest {
 	//15번 board에 댓글insert 10건 
 	//@Test
 	void test2() {
-		boardRepo.findById(100L).ifPresent(b -> {
-			IntStream.range(10, 20).forEach(i -> {
-				FreeBoardReply reply = FreeBoardReply.builder()
-													.reply("화요일"+i)
-													.replyer("user"+(i%2))
-													.board(b)
-													.build();
-				replyRepo.save(reply);
+		Long[] arr = {1L, 10L, 50L, 100L};
+		
+		Arrays.stream(arr).forEach(index -> {
+			boardRepo.findById(index).ifPresent(b -> {
+				IntStream.rangeClosed(1, 10).forEach(i -> {
+					FreeBoardReply reply = FreeBoardReply.builder()
+														.reply("화요일"+i)
+														.replyer("user"+(i%2))
+														.board(b)
+														.build();
+					replyRepo.save(reply);
+				});
 			});
-		});
+		}); 
 	}
 	
 	//board insert 100건

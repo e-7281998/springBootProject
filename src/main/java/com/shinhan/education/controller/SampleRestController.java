@@ -24,7 +24,7 @@ import lombok.extern.java.Log;
 @RestController	//@Controller + @ResponseBody
 				//jsp/servlet에서는... response.getWriter().append("jsp/servlet")
 @Log
-public class SampleController {
+public class SampleRestController {
 	
 	@Autowired
 	BoardRepository brepo; 

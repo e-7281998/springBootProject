@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ThymeLeaf 사용하기</h1>
+	<h2 th:text="${company}"></h2>
+	<p th:text="${greeting}">이 부분은 출력이 안됨</p>
+	<p th:text="${'<h1>'+greeting+'<h1>'}">html 출력 (인식X)</p>
+	<p th:utext="${'<h1>'+greeting+'<h1>'}">html 동작 (인식O)</p>
+  </body>
+</html>
