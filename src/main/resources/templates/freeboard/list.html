@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{/layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block layout:fragment="style1">
+	<style> 
+		.oddStyle{
+			background-color: #FAC1C1;
+		}
+		.evenStyle{
+			background-color: #FFE6E6;
+		}
+		.firstStyle{
+			color: red;
+			font-weight: bold;
+		}
+		.lastStyle{
+			color: blue;
+		}
+	</style>
+</th:block>
+</head>
+<body>
+	<div class="wrap">
+		<div class="panel panel-default" layout:fragment="content1">
+	
+		<h1>FreeBoard List~~~</h1>
+		<!-- <p th:text="${boardList}"></p> -->
+		<!-- target1, target2는 변수가 됨... 변수=값 임 -->
+		<table border="1" th:with="target1='user4', target2='user9'">
+			<tr>
+				<td>count, index</td>
+				<td>first, last</td>
+				<td>even, odd</td>
+				<td>size</td>
+				<td>번호</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>target...4찾기</td>
+				<td>target...9찾기</td>
+				<td>삭제</td>
+				<td>내용</td>
+				<td>작성일</td>
+				<td>수정일</td>
+			</tr>
+			<!-- 사용할 변수명: ${사용할 값}  -->
+			<tr th:each="board, rowStatus: ${boardList}"
+				th:class="${rowStatus.even} ? 'evenStyle' : 'oddStyle'"
+				th:classappend="${rowStatus.first or rowStatus.last} ? 'firstStyle' : ''"
+			>
+ 				<td th:text="|${rowStatus.index}-${rowStatus.count}|"></td>
+ 				<td th:text="|${rowStatus.first}-${rowStatus.last}|"></td>
+ 				<td th:text="|${rowStatus.even}-${rowStatus.odd}|"></td>
+ 				<td th:text="${rowStatus.size} "></td>
+				<td >
+ 					<!-- @{/freeboard/detail(bno=${board.bno})}로 사용하면 절대경로임 -->
+					<a th:href="@{detail(bno=${board.bno})}"
+					 th:text="${board.bno}"></a>
+				</td>
+				<td th:text="${board.title}">제목</td>
+				<td th:text="${board.writer}">작성자</td>
+				<td th:text="${board.writer == target1 ? '찾음(user4)' : '손님'}">작성자</td>
+				<td th:text="${board.writer == target2 ? '찾음(user9)' : '손님'}">작성자</td>
+				<!-- 만약 board.writer == target1 면 삭제 -->
+				<!-- 만약 board.writer==target1 면 view -->
+				<td>
+					<a href="#" th:if="${board.writer == target1}">삭제</a>
+					<p th:unless="${board.writer==target1}">view</p>
+				</td>
+				<!-- inline으로 작성하기 대괄호 두개 -->
+				<td th:text="${board.content}">내용</td>
+				<td>[[${board.regDate}]]</td>
+				<td>[[${board.updateDate}]]</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	
+	<th:block layout:fragment="script1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script th:inline="javascript">
+			/* javascript에서 inline으로 thymeleaf 사용하기(대괄호 두개) */
+			/* jacson이 json으로 만들어서 가져옴 */
+			var boardList = [[${ boardList}]];	
+			//console.log(boardList); 
+	
+			$.each(boardList, (index, item) => {
+				console.log(item); 
+			})
+		</script>
+	</th:block>
+	
+	
+</body>
+</html>

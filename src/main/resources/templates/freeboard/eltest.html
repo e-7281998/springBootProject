@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Expression Basic Objects</h1>
+	<p th:text="${boardList[0].title}"></p>
+	<p >Inline 방식 표현  ==> [[${boardList[0].title}]]</p> 
+	<p >Inline 방식 - #vars.이 생략됨  ==> [[${#vars.boardList[0].title}]]</p>
+	<p>[[${#response.characterEncoding}]]</p>
+	<p>properties (@environment.getProperty('app.title')) ==> [[${@environment.getProperty('app.title')}]]</p>
+	<p>session (session.userName)  ==> [[${session.userName}]]</p>
+	<p>param  ==> [[${param.bno}]]</p>
+	<p>#request.getParameter("bno") ==> [[${#request.getParameter("bno")}]]</p>
+	<p>List객체의 사이즈  ==> [[${boardList.size()}]]</p>
+	<p>타입리프가 제공하는 객체 사용 - 사이즈 ==> [[${#lists.size(boardList)}]]</p>
+	<hr>
+	<p th:text="${now}"></p>
+	<p th:text=" ${#dates.format(now,'yyyy-MM-dd hh:mm:ss')}"></p>
+	<p th:with="today=${#dates.format(now,'yyyy-MM-dd hh:mm:ss')}">
+		3. [[${today}]]
+	</p>
+	<hr>
+	<p th:text="${price}">1</p>
+	<!-- 3자리씩 콤마 -->
+	<p th:text="${#numbers.formatInteger(price, 3, 'COMMA')}">2</p>
+	<!-- . 앞뒤로 10자리. 없으면 0으로 채움 -->
+	<p th:text="${#numbers.formatDecimal(price, 10, 10, 'POINT')}">정수 10자리, 소수아래 10자리</p>
+	<hr>
+	<p th:text="${title}">1</p>
+	<p th:utext="${#strings.replace(title, 's', '<b>s</b>')}">1</p>
+	<p th:utext="${#strings.replace(title, 's', '<i>s</i>')}">1</p>
+	<p th:text="${#strings.toUpperCase(title)}">1</p>
+	<ul>	
+		<li th:each="myword : ${#strings.listSplit(title, ' ')}">
+			[[${myword}]]
+		</li>
+	</ul>
+	<hr>
+	<h2 th:text="${options}"></h2>
+	<ul>
+		<li th:each="aa:${options}" th:text="${aa}"></li>
+	</ul>
+	<hr>
+	<h2>링크사용하기</h2>
+	<a th:href="@{http://localhost:8888/app/freeboard/selectAll}">selectAll</a>
+	<a th:href="@{/freeboard/selectAll}">절대경로</a>
+	<!-- 다른 context인 경우 ~를 사용 -->
+	<a th:href="@{~/app/freeboard/selectAll}">절대경로...context-path가 다름</a>
+	<a th:href="@{selectAll}">상대경로</a>
+	<a th:href="@{detail(bno=50)}">parameter가 있는 경우</a>
+</body>
+</html>
