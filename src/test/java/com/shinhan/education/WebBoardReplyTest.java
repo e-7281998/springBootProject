@@ -23,6 +23,7 @@ public class WebBoardReplyTest {
 	
 	//board별 댓글수
 	
+	
 	//특정 board 댓글(Reply에서 시작)
 	@Test
 	void test5() {
