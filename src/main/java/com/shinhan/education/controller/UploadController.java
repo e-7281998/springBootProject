@@ -28,6 +28,13 @@ public class UploadController {
 	@PostMapping("/shop/register")
 	public String register(@RequestParam MultipartFile[] files, HttpServletRequest req) throws IOException, Exception {
 		String imgUploadPath = uploadPath + File.separator + "upload";
+		
+		//upload폴더 생성하기
+		File fi = new File(imgUploadPath);
+		if(!fi.exists()) {
+			fi.mkdir();
+		}
+		
 		//폴더생성
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName= null;

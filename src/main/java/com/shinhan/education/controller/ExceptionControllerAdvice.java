@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 //문제점 : static자원과 충돌
-//@ControllerAdvice
+@ControllerAdvice
 public class ExceptionControllerAdvice {
 	private Logger logger = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 

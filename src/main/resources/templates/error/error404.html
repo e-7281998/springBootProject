@@ -9,9 +9,11 @@
 </head>
 <body>
 	<div layout:fragment="content1">
+		<img th:src="@{/images/error.jpg}" />
 		<h1>서버에서 보낸 메시지</h1>
-		<p id="here">${msg}</p>
-		<p th:text="${msg}"></p>
+		<p id="here"></p>
+		<p >인라인방법 : [[${msg}]]</p>
+		<p th:text="${msg}">tag 속성 사용 방법</p>
 	</div>
 	<script type="text/javascript">
 		here.innerHTML = "입력주소 확인 : " + location.href;
