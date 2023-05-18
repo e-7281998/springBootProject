@@ -37,8 +37,9 @@ public class WebBoardController {
 	@Autowired
 	WebReplyRepository replyRepo; 
 	
-	@GetMapping("/register.do")
-	public String registerGet(WebBoard board, RedirectAttributes attr) {
+	//새로은 정보 등록
+	@PostMapping("/register.do")
+	public String registerPost(WebBoard board, RedirectAttributes attr) {
 		WebBoard newBoard = boardRepo.save(board);
 		if(newBoard != null) {
 			attr.addFlashAttribute("msg", "insert OK");
@@ -47,6 +48,12 @@ public class WebBoardController {
 		}
 		return "redirect:list.do";
 	}
+	
+	//등록 페이지로만 가니까 아무런 행동, 파라미터 필요 없음
+	@GetMapping("/register.do")
+	public void registerGet() { 
+	}
+	
 	
 	//삭제하기
 	@PostMapping("/delete.do")

@@ -28,13 +28,19 @@
 						<label>Writer</label>
 						<input class="form-control" name="writer" th:value="${board.writer}" />
 					</div> 
+					
+						<input th:if="${board.regdate!=null}" class="form-control" name="regdate"
+		    					th:value="${#dates.format(board.regdate,'yyyy-MM-dd hh:mm:ss')}" />
+					    <input th:if="${board.regdate==null}" class="form-control"  name="regdate"
+		    					th:value="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd hh:mm:ss')}"  />
+		    					
 						<input class="form-control" name="regdate"
 								th:value="${board.regdate}" type="hidden"/>
-						<input name="page" th:value="${pageVO.page}">
-						<input name="size" th:value="${pageVO.size}">
-						<input name="type" th:value="${pageVO.type}">
-						<input name="keyword" th:value="${pageVO.keyword}">
-				</form>
+						<input type="text" name="page" th:value="${pageVO.page}">
+						<input type="text" name="size" th:value="${pageVO.size}">
+						<input type="text" name="type" th:value="${pageVO.type}">
+						<input type="text" name="keyword" th:value="${pageVO.keyword}">
+				</form> 
 				
 				<div class="pull_right">
 					<a class="btn btn-warning modbtn">Modify</a>
