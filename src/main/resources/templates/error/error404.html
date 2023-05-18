@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="~{/layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content1">
+		<h1>서버에서 보낸 메시지</h1>
+		<p id="here">${msg}</p>
+		<p th:text="${msg}"></p>
+	</div>
+	<script type="text/javascript">
+		here.innerHTML = "입력주소 확인 : " + location.href;
+	</script>
+
+</body>
+</html>

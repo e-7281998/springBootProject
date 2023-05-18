@@ -28,7 +28,7 @@ public class WebBoardReplyTest {
 	@Test
 	void test5() {
 		WebBoard board = boardRepo.findById(170L).get();
-		List<WebReply> replyList = replyRepo.findByBoard(board);
+		List<WebReply> replyList = replyRepo.findByBoardOrderByRnoDesc(board);
 		replyList.forEach(reply -> {
 			System.out.println(reply);
 		});

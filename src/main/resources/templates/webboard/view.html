@@ -96,12 +96,15 @@
 	<th:block layout:fragment="script1">
 		<script th:inline="javascript" th:src="@{'/js/reply.js'}"></script>
 		<script th:inline="javascript">
-			console.log(externalFunc.myname);
+			/* console.log(externalFunc.myname);
 			console.log(externalFunc.mycompanay);
 			externalFunc.work();
-		
+		 */
 			replyManager.getAll("[[${board.bno}]]", printList);
-			function printList(rList, status) {
+			function printList(rList, status, xhr) {
+				//(응답받은 데이터, 상태값, Http객체)
+				//status : 201  성공
+				//console.log(xhr);
 				var str = "";
 				console.log(status);
 				$.each(rList, function(idx, item) {
