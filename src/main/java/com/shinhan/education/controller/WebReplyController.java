@@ -29,6 +29,7 @@ public class WebReplyController {
 	@Autowired
 	WebBoardRepository boardRepo;
 	
+	//ResponseEntity : 상태값도 같이 보내고 싶다면
 	private ResponseEntity<List<WebReply>> makeReturn(Long bno, HttpStatus status){
 		WebBoard board = WebBoard.builder().bno(bno).title("").build();
  		List<WebReply> replies = replyRepo.findByBoardOrderByRnoDesc(board);
