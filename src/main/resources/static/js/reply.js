@@ -25,9 +25,15 @@ var replyManager = (function() {
 		$.getJSON("/app/replies/" + obj, callback);
 	};
 	
+	//선언적 함수
 	function beforeSend(xhr){
 		xhr.setRequestHeader(header, token);
 	}
+	
+	//익명함수를 만들어서 변수 할당
+	/*var beforeSend2 = function (xhr){
+		xhr.setRequestHeader(header, token);
+	}*/
 	
     //board의 댓글추가 {"bno":11, title:"aa", writer:"bb"}
 	var add2 = function(obj, callback){
