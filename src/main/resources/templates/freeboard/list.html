@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{/layout/layout1}">
+      layout:decorator="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -81,7 +82,7 @@
 	</div>
 	
 	<th:block layout:fragment="script1">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		
 		<script th:inline="javascript">
 			/* javascript에서 inline으로 thymeleaf 사용하기(대괄호 두개) */
 			/* jacson이 json으로 만들어서 가져옴 */
