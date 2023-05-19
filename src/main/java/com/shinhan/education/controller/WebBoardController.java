@@ -23,6 +23,7 @@ import com.shinhan.education.vo3.PageMarker;
 import com.shinhan.education.vo3.PageVO;
 import com.shinhan.education.vo3.WebBoard;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
 import sun.font.AttributeValues;
 
@@ -36,7 +37,7 @@ public class WebBoardController {
 	
 	@Autowired
 	WebReplyRepository replyRepo; 
-	
+	@ApiOperation(value="게시판 등록화면", notes="게시판 등록화면!!")
 	//새로은 정보 등록
 	@PostMapping("/register.do")
 	public String registerPost(WebBoard board, RedirectAttributes attr) {
