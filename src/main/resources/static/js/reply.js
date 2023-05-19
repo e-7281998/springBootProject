@@ -1,5 +1,12 @@
 //즉시실행함수로 만듦  (function(){ return {}; })()
 //키와 메서드를 가진 JavaScript Object를 return함 
+//Restfull방식으로 요청하기
+ 
+ //토근을 header에 저장해서 들고 다니기
+ //ajax할 때도 필요하므로 beforeSend 포함해서 전송하기
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+ 
  
 var externalFunc = (() => {
 	return {myname: "tm",
@@ -18,10 +25,15 @@ var replyManager = (function() {
 		$.getJSON("/app/replies/" + obj, callback);
 	};
 	
+	function beforeSend(xhr){
+		xhr.setRequestHeader(header, token);
+	}
+	
     //board의 댓글추가 {"bno":11, title:"aa", writer:"bb"}
 	var add2 = function(obj, callback){
 		console.log("add.....");
 	    $.ajax({
+		    beforeSend : beforeSend,
 			type:"post",
 			url: "/app/replies/" + obj.bno,
 			data: JSON.stringify(obj),
@@ -34,6 +46,7 @@ var replyManager = (function() {
 	//댓글수정
     var update2 = function(obj, callback) {
 		$.ajax({
+			beforeSend : beforeSend,
 			type: "put",
 			url:"/app/replies/" +  obj.bno,
 			data:JSON.stringify(obj),
@@ -45,6 +58,7 @@ var replyManager = (function() {
     
     var remove2 = function(obj, callback)  {
 	$.ajax({
+		beforeSend : beforeSend,
 		type:  "delete",
 		url:  "/app/replies/"+obj.bno + "/" + obj.rno,
 		dataType: "json",
